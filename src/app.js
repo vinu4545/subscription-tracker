@@ -1,18 +1,25 @@
 const express = require("express");
-const morgan = require("morgan");
 const helmet = require("helmet");
+const morgan = require("morgan");
+const cors = require("cors");
+
+const routes = require("./routes");
 
 const app = express();
 
-// Security Headers
+// Security
 app.use(helmet());
 
 // Logging
 app.use(morgan("dev"));
 
-// Test Route
-app.get("/", (req, res) => {
-    res.send("🚀 Subscription Tracker API is Running...");
-});
+// Parse JSON
+app.use(express.json());
+
+// Enable CORS
+app.use(cors());
+
+// Routes
+app.use("/", routes);
 
 module.exports = app;
