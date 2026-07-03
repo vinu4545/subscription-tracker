@@ -1,9 +1,13 @@
 const express = require("express");
 const morgan = require("morgan");
+const helmet = require("helmet");
 
 const app = express();
 
-// Logging Middleware
+// Security Headers
+app.use(helmet());
+
+// Logging
 app.use(morgan("dev"));
 
 // Test Route
