@@ -1,11 +1,10 @@
 const express = require("express");
+const homeController = require("../controllers/home.controller");
 
 const router = express.Router();
 
 // Home Route
-router.get("/", (req, res) => {
-    res.send("🚀 Subscription Tracker API is Running...");
-});
+router.get("/", homeController.getHome);
 
 // Test Route
 router.post("/test", (req, res) => {
@@ -15,4 +14,10 @@ router.post("/test", (req, res) => {
     });
 });
 
+router.get("/error", (req, res, next) => {
+    const error = new Error("This is a test error");
+    error.statusCode = 500;
+
+    next(error);
+});
 module.exports = router;
