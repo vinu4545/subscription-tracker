@@ -33,3 +33,23 @@ test('GET /error returns a structured error response', async () => {
     server.close();
   }
 });
+
+test('POST /register rejects invalid input with validation errors', async () => {
+  const server = app.listen(0);
+  const { port } = server.address();
+
+  try {
+    const response = await fetch(`http://127.0.0.1:${port}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'ab', email: 'invalid-email', password: '123' }),
+    });
+    const body = await response.json();
+
+    assert.equal(response.status, 400);
+    assert.equal(body.success, false);
+    assert.ok(Array.isArray(body.errors));
+  } finally {
+    server.close();
+  }
+});
