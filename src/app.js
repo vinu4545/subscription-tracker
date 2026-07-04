@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes");
 const errorHandler = require("./middlewares/error.middleware");
+const notFoundHandler = require("./middlewares/notFound.middleware");
+
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(cors());
 
 // Routes
 app.use("/", routes);
+
+app.use(notFoundHandler);
 
 // Global Error Handler
 app.use(errorHandler);
