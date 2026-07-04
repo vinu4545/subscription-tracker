@@ -1,6 +1,8 @@
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const users = require("../models/user.model");
 
-const registerUser = (userData) => {
+const registerUser = async (userData) => {
 
     const existingUser = users.find(
         user => user.email === userData.email
@@ -10,13 +12,18 @@ const registerUser = (userData) => {
         throw new Error("User already exists");
     }
 
+    // Hash password
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
+
     const newUser = {
         id: users.length + 1,
-        ...userData,
+        name: userData.name,
+        email: userData.email,
+        password: hashedPassword,
     };
 
     users.push(newUser);
-
+    console.log(users);
     return {
         success: true,
         message: "User registered successfully.",
@@ -28,10 +35,11 @@ const registerUser = (userData) => {
     };
 };
 
-const loginUser = () => {
+const loginUser = async (userData) => {
     return {
         success: true,
-        message: "Login service coming next.",
+        message: "User login service is ready.",
+        user: userData,
     };
 };
 
