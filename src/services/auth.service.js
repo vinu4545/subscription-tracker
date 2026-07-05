@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const users = require("../models/user.model");
+const { generateToken } = require("../utils/jwt");
 
 const registerUser = async (userData) => {
 
@@ -35,11 +36,37 @@ const registerUser = async (userData) => {
     };
 };
 
-const loginUser = async (userData) => {
+const loginUser = async (loginData) => {
+
+    const user = users.find(
+        user => user.email === loginData.email
+    );
+
+    if (!user) {
+        throw new Error("Invalid email or password");
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+        loginData.password,
+        user.password
+    );
+
+    if (!isPasswordCorrect) {
+        throw new Error("Invalid email or password");
+    }
+
+    // Generate JWT
+    const token = generateToken(user);
+
     return {
         success: true,
-        message: "User login service is ready.",
-        user: userData,
+        message: "Login successful.",
+        token,
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        },
     };
 };
 

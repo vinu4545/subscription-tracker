@@ -14,10 +14,14 @@ const register = async (req, res, next) => {
     }
 };
 
-const login = (req, res) => {
-    const result = authService.loginUser();
+const login = async (req, res, next) => {
+    try {
+        const result = await authService.loginUser(req.body);
 
-    res.status(200).json(result);
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
 };
 
 module.exports = {
