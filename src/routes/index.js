@@ -3,6 +3,7 @@ const express = require("express");
 const homeController = require("../controllers/home.controller");
 const authRoutes = require("./auth.routes");
 const userRoutes = require("./user.routes");
+const subscriptionRoutes = require("./subscription.routes");
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.post("/test", (req, res) => {
 */
 
 router.use("/auth", authRoutes);
-
+router.use("/subscriptions", subscriptionRoutes);
 /*
 |--------------------------------------------------------------------------
 | User Routes (Protected)
