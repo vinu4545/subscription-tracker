@@ -21,6 +21,21 @@ const createSubscription = (subscriptionData, user) => {
     };
 };
 
+const getSubscriptions = (user) => {
+
+    const userSubscriptions = subscriptions.filter(
+        subscription => subscription.userId === user.userId
+    );
+
+    return {
+        success: true,
+        count: userSubscriptions.length,
+        subscriptions: userSubscriptions,
+    };
+
+};
+
 module.exports = {
     createSubscription,
+    getSubscriptions,
 };

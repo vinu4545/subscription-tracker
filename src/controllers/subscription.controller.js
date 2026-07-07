@@ -19,6 +19,25 @@ const createSubscription = (req, res, next) => {
 
 };
 
+
+const getSubscriptions = (req, res, next) => {
+
+    try {
+
+        const result = subscriptionService.getSubscriptions(req.user);
+
+        res.status(200).json(result);
+
+    } catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+
 module.exports = {
     createSubscription,
+    getSubscriptions,
 };

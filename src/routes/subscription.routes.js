@@ -11,6 +11,12 @@ const {
 
 const router = express.Router();
 
+router.get(
+    "/",
+    authMiddleware,
+    subscriptionController.getSubscriptions
+);
+
 router.post(
     "/",
     authMiddleware,
