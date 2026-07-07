@@ -35,7 +35,28 @@ const getSubscriptions = (user) => {
 
 };
 
+
+const getSubscriptionById = (subscriptionId, user) => {
+
+    const subscription = subscriptions.find(
+        subscription =>
+            subscription.id === Number(subscriptionId) &&
+            subscription.userId === user.userId
+    );
+
+    if (!subscription) {
+        throw new Error("Subscription not found");
+    }
+
+    return {
+        success: true,
+        subscription,
+    };
+
+};
+
 module.exports = {
     createSubscription,
     getSubscriptions,
+    getSubscriptionById,
 };

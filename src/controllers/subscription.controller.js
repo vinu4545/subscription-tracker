@@ -37,7 +37,28 @@ const getSubscriptions = (req, res, next) => {
 };
 
 
+const getSubscriptionById = (req, res, next) => {
+
+    try {
+
+        const result = subscriptionService.getSubscriptionById(
+            req.params.id,
+            req.user
+        );
+
+        res.status(200).json(result);
+
+    } catch (error) {
+
+        next(error);
+
+    }
+
+};
+
+
 module.exports = {
     createSubscription,
     getSubscriptions,
+    getSubscriptionById,
 };

@@ -17,6 +17,12 @@ router.get(
     subscriptionController.getSubscriptions
 );
 
+router.get(
+    "/:id",
+    authMiddleware,
+    subscriptionController.getSubscriptionById
+);
+
 router.post(
     "/",
     authMiddleware,
